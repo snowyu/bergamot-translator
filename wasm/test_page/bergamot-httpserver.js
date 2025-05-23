@@ -74,6 +74,7 @@ const Helper = {
     types: {
        "wasm" : "application/wasm"
        , "js" : "application/javascript"
+       , "json" : "application/json"
        , "html" : "text/html"
        , "htm" : "text/html"
        , "ico" : "image/vnd.microsoft.icon"
