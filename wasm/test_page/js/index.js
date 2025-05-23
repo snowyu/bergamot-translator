@@ -75,9 +75,10 @@ class Editor {
 async function main() {
   const options = {
     cacheSize: 2^13,
-    downloadTimeout: null // Disable timeout
+    downloadTimeout: null, // Disable timeout
+    registryUrl: window.location.origin + '/models.json',
   };
-  
+
   const backing = new TranslatorBacking(options);
 
   let pending = 0; // Number of pending requests
@@ -102,7 +103,7 @@ async function main() {
       const select = $(`#lang-${field}`);
 
       const pairs = Array.from(languages, code => ({code, name: names.of(code)}));
-      
+
       pairs.sort(({name: a}, {name: b}) => a.localeCompare(b));
 
       pairs.forEach(({name, code}) => {
@@ -125,7 +126,7 @@ async function main() {
     try {
       const from = $('#lang-from').value;
       const to = $('#lang-to').value;
-      
+
       // Querying models to see whether quality estimation is supported by all
       // of them.
       const models = await backing.getModels({from, to});
@@ -152,7 +153,7 @@ async function main() {
       if (error.constructor === CancelledError) {
         return;
       }
-      
+
       // Ignore 'errors' caused by typing too fast or by changing the language
       // pair while a translation was still in progress (or being loaded)
       if (error.constructor === SupersededError || error.constructor === CancelledError)
